@@ -1,0 +1,23 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.grid-puzzle-container{
+    min-height: 600px;
+    max-width: 600px;
+    position: relative;
+    border: 1px solid red;
+}
+.ceil-puzzle{
+    border: 1px solid blue;
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3em;
+    background-color: antiquewhite;
+}
