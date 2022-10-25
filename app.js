@@ -1,97 +1,197 @@
-const puzzleContainer = document.querySelector(".grid-puzzle-container");
-const newGameBtn = document.querySelector('.new-puzle')
-let puzzle = [];
-let sizeFirst = 3;
-let flag = 0;
-generatorPuzzle();
-radomizePuzzle()
-renderPuzzle();
+let canvas = document.querySelector(".canvas");
+let ctx = canvas.getContext("2d");
+let arr15 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+let arr3 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-newGameBtn.addEventListener('click',radomizePuzzle)
+let newArr15 = arr15.sort(() => Math.random() - 0.5);
 
-function getRow(pos) {
-  return Math.ceil(pos / 3);
-}
-function getCol(pos) {
-  const col = pos % 3;
-  if (col === 0) {
-    return sizeFirst;
+function drawSquare(x, y, value) {
+  ctx.fillStyle = "black";
+  ctx.fillRect(x, y, 100, 100);
+  if (value === 0) {
+    ctx.fillStyle = "white";
   } else {
-    return col;
+    ctx.fillStyle = "rgb(148, 106, 52)";
+  }
+  ctx.fillRect(x + 5, y + 5, 90, 90);
+  ctx.font = "60px Arial";
+  ctx.fillStyle = "white";
+  if (value < 10) {
+    ctx.fillText(value, x + 35, y + 70);
+  } else {
+    ctx.fillText(value, x + 15, y + 70);
   }
 }
-function generatorPuzzle() {
-  for (let i = 1; i <= sizeFirst * sizeFirst; i++) {
-    puzzle.push({
-      value: i,
-      position: i,
-      x: (getCol(i) - 1) * 200,
-      y: (getRow(i) - 1) * 200,
-      disabled:false,
-    });
+
+function drawTag(pos, value) {
+  switch (pos) {
+    case 0:
+      drawSquare(0, 0, value);
+      break;
+    case 1:
+      drawSquare(100, 0, value);
+      break;
+    case 2:
+      drawSquare(200, 0, value);
+      break;
+    case 3:
+      drawSquare(300, 0, value);
+      break;
+    case 4:
+      drawSquare(0, 100, value);
+      break;
+    case 5:
+      drawSquare(100, 100, value);
+      break;
+    case 6:
+      drawSquare(200, 100, value);
+      break;
+    case 7:
+      drawSquare(300, 100, value);
+      break;
+    case 8:
+      drawSquare(0, 200, value);
+      break;
+    case 9:
+      drawSquare(100, 200, value);
+      break;
+    case 10:
+      drawSquare(200, 200, value);
+      break;
+    case 11:
+      drawSquare(300, 200, value);
+      break;
+    case 12:
+      drawSquare(0, 300, value);
+      break;
+    case 13:
+      drawSquare(100, 300, value);
+      break;
+    case 14:
+      drawSquare(200, 300, value);
+      break;
+    case 15:
+      drawSquare(300, 300, value);
+      break;
   }
-  console.log(puzzle);
 }
 
-function renderPuzzle() {
+for (let i = 0; i <= 15; i++) {
+  drawTag(i, newArr15[i]);
+}
+function checkPlace(eventX) {
+  if (eventX < 110) {
+    return 1;
+  }
+  if (eventX < 210) {
+    return 2;
+  }
+  if (eventX < 310) {
+    return 3;
+  }
+  if (eventX < 410) {
+    return 4;
+  }
+}
 
-  puzzleContainer.innerHTML = "";
-  puzzle.forEach((puzzleItem) => {
-    if(puzzleItem.value !== 9){
-      puzzleContainer.innerHTML += `
-      <div class="ceil-puzzle" style="left: ${puzzleItem.x}px; top: ${puzzleItem.y}px">
-      ${puzzleItem.value}
-      </div>
-`;
+canvas.addEventListener("click", function (event) {
+  console.log(event);
+  if (event.clientY < 110) {
+    let place = checkPlace(event.clientX);
+    var clickPos = 0;
+    switch (place) {
+      case 1:
+        clickPos = 0;
+        break;
+      case 2:
+        clickPos = 1;
+        break;
+      case 3:
+        clickPos = 2;
+        break;
+      case 4:
+        clickPos = 3;
+        break;
     }
-
-
-  });
-
-}
-
-
-function radomizePuzzle(){
-    if(flag ==  0){
-        renderPuzzle()
+  }
+  if (event.clientY > 110 && event.clientY < 210) {
+    let place = checkPlace(event.clientX);
+    switch (place) {
+      case 1:
+        clickPos = 4;
+        break;
+      case 2:
+        clickPos = 5;
+        break;
+      case 3:
+        clickPos = 6;
+        break;
+      case 4:
+        clickPos = 7;
+        break;
     }
-    const randomValues = getRandomValues()
-    console.log(randomValues)
-    i = 0;
-    puzzle.map((puzzleItem) => {
-        
-        puzzleItem.value = randomValues[i]
-        i++
-    })
-
-    const puzzleWithValueOfNine = puzzle.find(item => item.value === sizeFirst * sizeFirst )
-    puzzleWithValueOfNine.disabled = true
-}
-
-function getRandomValues(){
-    const values = [];
-    for(let i =1; i<= sizeFirst * sizeFirst; i++){
-        values.push(i)
+  }
+  if (event.clientY > 210 && event.clientY < 310) {
+    let place = checkPlace(event.clientX);
+    switch (place) {
+      case 1:
+        clickPos = 8;
+        break;
+      case 2:
+        clickPos = 9;
+        break;
+      case 3:
+        clickPos = 10;
+        break;
+      case 4:
+        clickPos = 11;
+        break;
     }
-    const randomValues = values.sort(() => Math.random() - 0.5)
-    return randomValues
-}
+  }
+  if (event.clientY > 310 && event.clientY < 410) {
+    let place = checkPlace(event.clientX);
+    switch (place) {
+      case 1:
+        clickPos = 12;
+        break;
+      case 2:
+        clickPos = 13;
+        break;
+      case 3:
+        clickPos = 14;
+        break;
+      case 4:
+        clickPos = 15;
+        break;
+    }
+  }
 
-
-function getEmptyPuzzle(){
-  return puzzle.find((e)=> e.disabled === true)
-}
-function getPositionPuzzle(pos){
-  return puzzle.find((i)=> i.position === pos)
-}
-
-function getRightPuzzle(){
-  const emptyPuzzle = getEmptyPuzzle();
-
-  getEmptyPuzzle()
-  getPositionPuzzle(emptyPuzzle.position + 1)
-
-}
-
-
-console.log(getRightPuzzle())
+  if (newArr15[clickPos - 4] === 0) {
+    newArr15[clickPos - 4] = newArr15[clickPos];
+    newArr15[clickPos] = 0;
+    for (let i = 0; i <= 15; i++) {
+      drawTag(i, newArr15[i]);
+    }
+  } 
+   if (newArr15[clickPos + 4] === 0) {
+    newArr15[clickPos + 4] = newArr15[clickPos];
+    newArr15[clickPos] = 0;
+    for (let i = 0; i <= 15; i++) {
+      drawTag(i, newArr15[i]);
+    }
+  } 
+  if (newArr15[clickPos + 1] === 0 && clickPos !== 3 && clickPos !== 7 && clickPos !== 11 ) {
+    newArr15[clickPos + 1] = newArr15[clickPos];
+    newArr15[clickPos] = 0;
+    for (let i = 0; i <= 15; i++) {
+      drawTag(i, newArr15[i]);
+    }
+  } 
+   if (newArr15[clickPos - 1] === 0 && clickPos !== 4 && clickPos !== 8 && clickPos !== 12 ) {
+    newArr15[clickPos - 1] = newArr15[clickPos];
+    newArr15[clickPos] = 0;
+    for (let i = 0; i <= 15; i++) {
+      drawTag(i, newArr15[i]);
+    }
+  }
+});
