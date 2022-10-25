@@ -4,20 +4,24 @@
     box-sizing: border-box;
 }
 
-.grid-puzzle-container{
-    min-height: 600px;
-    max-width: 600px;
-    position: relative;
-    border: 1px solid red;
-}
-.ceil-puzzle{
-    border: 1px solid blue;
-    width: 200px;
-    height: 200px;
-    position: absolute;
+.game__container{
     display: flex;
     justify-content: center;
-    align-items: center;
-    font-size: 3em;
-    background-color: rgb(148, 106, 52);
+}
+.win{
+    width: 100vw;
+    height: 100vh;
+    color: rgb(255, 0, 0);
+    padding-top: 50px;
+    font-size: 60px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.74);
+    position: absolute;
+    top: 0;
+    display: none;
+}
+.count{
+    color: red;
+    font-size: 20px;
+    margin-left: 10px;
 }

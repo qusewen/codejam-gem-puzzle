@@ -2,9 +2,17 @@ let canvas = document.querySelector(".canvas");
 let ctx = canvas.getContext("2d");
 let arr15 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 let arr3 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-
+let win = document.querySelector(".win");
 let newArr15 = arr15.sort(() => Math.random() - 0.5);
-
+let coun = document.querySelector(".count");
+const btn = document.querySelector('.btn')
+btn.addEventListener('click', () => {
+  // добавить проверку согласны ли вы начать новую игру
+  newArr15 = arr15.sort(() => Math.random() - 0.5);
+  for (let i = 0; i <= 15; i++) {
+    drawTag(i, newArr15[i]);
+  }
+} )
 function drawSquare(x, y, value) {
   ctx.fillStyle = "black";
   ctx.fillRect(x, y, 100, 100);
@@ -172,26 +180,80 @@ canvas.addEventListener("click", function (event) {
     for (let i = 0; i <= 15; i++) {
       drawTag(i, newArr15[i]);
     }
-  } 
-   if (newArr15[clickPos + 4] === 0) {
+    test();
+  }
+  if (newArr15[clickPos + 4] === 0) {
     newArr15[clickPos + 4] = newArr15[clickPos];
     newArr15[clickPos] = 0;
     for (let i = 0; i <= 15; i++) {
       drawTag(i, newArr15[i]);
     }
-  } 
-  if (newArr15[clickPos + 1] === 0 && clickPos !== 3 && clickPos !== 7 && clickPos !== 11 ) {
+    test();
+  }
+  if (
+    newArr15[clickPos + 1] === 0 &&
+    clickPos !== 3 &&
+    clickPos !== 7 &&
+    clickPos !== 11
+  ) {
     newArr15[clickPos + 1] = newArr15[clickPos];
     newArr15[clickPos] = 0;
     for (let i = 0; i <= 15; i++) {
       drawTag(i, newArr15[i]);
     }
-  } 
-   if (newArr15[clickPos - 1] === 0 && clickPos !== 4 && clickPos !== 8 && clickPos !== 12 ) {
+    test();
+  }
+  if (
+    newArr15[clickPos - 1] === 0 &&
+    clickPos !== 4 &&
+    clickPos !== 8 &&
+    clickPos !== 12
+  ) {
     newArr15[clickPos - 1] = newArr15[clickPos];
     newArr15[clickPos] = 0;
     for (let i = 0; i <= 15; i++) {
       drawTag(i, newArr15[i]);
     }
+    test();
   }
 });
+
+let testArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0];
+
+let count = 0;
+coun.innerHTML = `count 0`;
+function test() {
+  count++;
+
+  if (
+    arr15[0] === testArr[0] &&
+    arr15[1] === testArr[1] &&
+    arr15[2] === testArr[2] &&
+    arr15[3] === testArr[3] &&
+    arr15[4] === testArr[4] &&
+    arr15[5] === testArr[5] &&
+    arr15[6] === testArr[6] &&
+    arr15[7] === testArr[7] &&
+    arr15[8] === testArr[8] &&
+    arr15[9] === testArr[9] &&
+    arr15[10] === testArr[10] &&
+    arr15[11] === testArr[11] &&
+    arr15[12] === testArr[12] &&
+    arr15[13] === testArr[13] &&
+    arr15[14] === testArr[14] &&
+    arr15[15] === testArr[15]
+  ) {
+    win.style.display = "block";
+  } else {
+    win.style.display = "none";
+  }
+
+  coun.innerHTML = `count ${count}`;
+}
+
+
+function newGame(){
+  for (let i = 0; i <= 15; i++) {
+    drawTag(i, newArr15[i]);
+  }
+}
